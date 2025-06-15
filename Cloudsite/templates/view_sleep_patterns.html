@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sleep Behaviour</title>
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow rounded" style="min-width: 400px;">
+        {% extends "base.html" %}
+        {% block title %}Schlafverhalten{% endblock %}
+        {% block content %}
+        <h2 class="mb-4 text-center">Schlafverhalten</h2>
+        {% if sleep_events and sleep_events|length > 0 %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Zeitstempel</th>
+                        <th>Ereignis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for event in sleep_events %}
+                    <tr>
+                        <td>{{ event['timestamp'] }}</td>
+                        <td>{{ event['eventname'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="alert alert-info text-center" role="alert">
+                Keine Schlafdaten vorhanden.
+            </div>
+        {% endif %}
+        {% endblock %}
+    </div>
+</body>
+</html>

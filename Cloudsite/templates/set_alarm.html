@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Set Weekly Alarm</title>
+</head>
+
+
+
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow rounded" style="min-width: 350px;">
+        {% extends "base.html" %}
+        {% block title %}Set Alarm{% endblock %}
+        {% block content %}
+        <h2 class="mb-4 text-center">Set Weekly Alarm</h2>
+        <form method="POST" class="mb-4">
+            <div class="row g-2">
+                <div class="col">
+                    <select class="form-select" name="day" required>
+                        <option value="" disabled selected>Select Day</option>
+                        {% for day in days %}
+                            <option value="{{ day }}">{{ day }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col">
+                    <input type="time" class="form-control" name="time" required>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-success w-100">Set</button>
+                </div>
+            </div>
+        </form>
+        <ul class="list-group">
+            {% for day, time in alarm_times.items() %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <strong>{{ day }}</strong>
+                {% if time %}
+                    <form method="POST" action="{{ url_for('reset_alarm', day=day) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline" style="color: #dc3545; text-decoration: underline;">
+                            {{ time }}
+                        </button>
+                    </form>
+                {% else %}
+                    <span class="text-muted">Not set</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endblock %}
+
+        <div class="mt-4 text-center">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Return to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>

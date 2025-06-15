@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Smart Alarm Clock</title>
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow rounded" style="min-width: 350px;">
+        {% extends "base.html" %}
+        {% block title %}Smart Alarm Clock{% endblock %}
+        {% block content %}
+        <h2 class="mb-4 text-center">Smart Alarm Clock</h2>
+        <div class="d-grid gap-3">
+            <button class="btn btn-primary" onclick="location.href='/set_alarm'">Set Weekly Alarm</button>
+            <button class="btn btn-secondary" onclick="location.href='/view_sleep_patterns'">View Sleep Patterns</button>
+        </div>
+        {% endblock %}
+    </div>
+</body>
+</html>
