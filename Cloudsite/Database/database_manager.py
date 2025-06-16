@@ -3,9 +3,10 @@ import sqlite3
 
 
 class DatabaseManager:
-    def __init__(self, db_path='database.db'):
+    def __init__(self, db_path='Cloudsite/Database/database.db'):
         self.db_path = db_path
         self.connection = None
+        
 
     def connect(self):
         """Establish a connection to the SQLite database."""

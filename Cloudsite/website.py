@@ -33,7 +33,7 @@ db.create_table('alarms', ['day TEXT PRIMARY KEY', 'time TEXT'])
 db.create_table('sleep_events', ['timestamp TEXT', 'eventname TEXT'])
 
 
-db.insert_data("sleep_events", (time.strftime("%Y-%m-%d %H:%M:%S"), "Tobias eliminated"))
+db.insert_data("sleep_events", (time.strftime("%Y-%m-%d %H:%M:%S"), "Server started"))
 db.close()
 
 
