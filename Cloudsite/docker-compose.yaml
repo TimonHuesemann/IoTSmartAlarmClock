@@ -1,0 +1,63 @@
+
+services:
+  website:
+    build: ./website
+    container_name: website
+    ports:
+      - "5000:5000"
+    environment:
+      - ENV_VAR=example
+    restart: unless-stopped
+    volumes:
+      - ./shared_files:/website/shared_files
+    depends_on:
+      db:
+        condition: service_healthy
+
+    
+
+  db:
+    image: postgres:latest
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=SmartAlarmClock
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+
+  mosquitto:
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    ports:
+      - "1883:1883"     # MQTT Port
+      - "9001:9001"     # Optional: WebSocket Port
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+
+  mqtt_listener:
+    build: ./mqtt_listener
+    container_name: mqtt_listener
+    depends_on:
+      - mosquitto
+    volumes:
+      - ./shared_files:/mqtt_listener/shared_files
+    environment:
+      - MQTT_BROKER=mosquitto
+      - MQTT_PORT=1883
+    restart: unless-stopped
+
+
+
+volumes:
+  db_data:
